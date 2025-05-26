@@ -197,7 +197,7 @@ export default defineType({
   preview: {
     prepare() {
       return {
-        title: "Global Site Content",
+        title: "Global Site Settings",
         subtitle: "Header and Footer settings",
       };
     },

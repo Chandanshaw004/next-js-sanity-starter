@@ -14,6 +14,18 @@ export const structure = (S: StructureBuilder, context: any) =>
   S.list()
     .title("Content")
     .items([
+      S.listItem()
+        .title("Global Site Settings")
+        .id("globalContent")
+        .schemaType("globalContent")
+        .icon(Globe)
+        .child(
+          S.editor()
+            .id("globalContent")
+            .title("Global Site Settings")
+            .schemaType("globalContent")
+            .documentId("globalContent")
+        ),
       orderableDocumentListDeskItem({
         type: "page",
         title: "Pages",
@@ -21,15 +33,6 @@ export const structure = (S: StructureBuilder, context: any) =>
         S,
         context,
       }),
-      S.listItem()
-        .title("Global Content")
-        .icon(Globe)
-        .child(
-          S.document()
-            .id("globalContent")
-            .schemaType("globalContent")
-            .documentId("global-content")
-        ),
       S.listItem()
         .title("Posts")
         .schemaType("post")
