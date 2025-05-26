@@ -39,8 +39,8 @@ export default function SectionHeader({
             </h1>
           )}
           <h2 className="text-3xl md:text-5xl mb-4">{title}</h2>
+          <p>{description}</p>
         </div>
-        <p>{description}</p>
       </div>
     </SectionContainer>
   );

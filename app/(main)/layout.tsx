@@ -14,20 +14,19 @@ export default async function MainLayout({
   const data = await fetchSanityGlobalContent();
 
   const header = {
-    brandingType: data?.brandingTypeHeader,
     logo: data?.headerLogo,
-    textLogo: data?.headerTextLogo,
     navItems: data?.headerNavItems,
+  };
+  const footer = {
+    logo: data?.footerLogo,
+    description: data?.footerDescription,
+    socialLinks: data?.socialLinks,
+    navItems: data?.footerLinks,
   };
 
   return (
     <>
-      <Header
-        brandingType={header.brandingType!!}
-        logo={header.logo!!}
-        navItems={header.navItems!!}
-        textLogo={header.textLogo!!}
-      />
+      <Header logo={header.logo!!} navItems={header.navItems!!} />
       <main>{children}</main>
       <SanityLive />
       {(await draftMode()).isEnabled && (
@@ -36,7 +35,12 @@ export default async function MainLayout({
           <VisualEditing />
         </>
       )}
-      <Footer />
+      <Footer
+        description={footer.description!!}
+        logo={footer.logo!!}
+        navItems={footer.navItems!!}
+        socialLinks={footer.socialLinks!!}
+      />
     </>
   );
 }

@@ -8,28 +8,23 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 
 type HeaderProps = {
-  brandingType: GlobalContent["brandingTypeHeader"];
   logo: GlobalContent["headerLogo"];
-  textLogo: GlobalContent["headerTextLogo"];
   navItems: NonNullable<GlobalContent["headerNavItems"]>;
 };
 
 export default function Header(props: HeaderProps) {
-  const { brandingType, logo, textLogo, navItems } = props;
+  const { logo, navItems } = props;
 
   return (
     <header className="sticky top-0 w-full border-border/40 bg-background/95 z-50">
       <div className="container flex items-center justify-between h-14">
         <Link href="/" aria-label="Home page">
-          {logo?.asset?._ref ? (
-            <Image
+          {logo?.asset?._ref && (
+            <img
               src={urlFor(logo.asset._ref).url()}
               alt={logo.alt || ""}
-              width={100}
-              height={100}
+              className="h-12 w-auto"
             />
-          ) : (
-            <span>{logo?.alt || "Logo not available"}</span>
           )}
         </Link>
         <div className="hidden xl:flex gap-7 items-center justify-between">
