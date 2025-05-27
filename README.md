@@ -53,7 +53,7 @@ pnpm dev
 Import the demo dataset to get started with sample content:
 
 ```bash
-npx sanity dataset import sample-data.tar.gz production --replace
+sanity dataset import ./backup/production.tar.gz production --replace
 ```
 
 #### 2. Publish your first document
