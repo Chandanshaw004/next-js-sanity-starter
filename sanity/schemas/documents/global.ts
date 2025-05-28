@@ -89,6 +89,39 @@ export default defineType({
                       type: "boolean",
                       initialValue: false,
                     }),
+                    defineField({
+                      name: "subSubMenu",
+                      title: "Sub Sub Menu",
+                      type: "array",
+                      of: [
+                        {
+                          type: "object",
+                          name: "subSubNavItem",
+                          title: "Sub Sub Menu Item",
+                          fields: [
+                            defineField({
+                              name: "label",
+                              title: "Label",
+                              type: "string",
+                              validation: (Rule) => Rule.required(),
+                            }),
+                            defineField({
+                              name: "href",
+                              title: "Link",
+                              type: "url",
+                              validation: (Rule) =>
+                                Rule.uri({ allowRelative: true }),
+                            }),
+                            defineField({
+                              name: "target",
+                              title: "Open in new tab?",
+                              type: "boolean",
+                              initialValue: false,
+                            }),
+                          ],
+                        },
+                      ],
+                    }),
                   ],
                 },
               ],

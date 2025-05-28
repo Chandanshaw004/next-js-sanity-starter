@@ -3,8 +3,8 @@ import { orderRankField } from "@sanity/orderable-document-list";
 import { BookA } from "lucide-react";
 
 export default defineType({
-  name: "category",
-  title: "Category",
+  name: "subcategory",
+  title: "Sub Category",
   type: "document",
   icon: BookA,
   fields: [
@@ -13,13 +13,7 @@ export default defineType({
       title: "Title",
       type: "string",
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "subcategory",
-      title: "Sub Category",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "subcategory" }] }],
-    }),
-    orderRankField({ type: "category" }),
+    }),   
+    orderRankField({ type: "subcategory" }),
   ],
 });

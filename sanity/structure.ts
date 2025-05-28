@@ -49,6 +49,13 @@ export const structure = (S: StructureBuilder, context: any) =>
         context,
       }),
       orderableDocumentListDeskItem({
+        type: "subcategory",
+        title: "Sub Categories",
+        icon: BookA,
+        S,
+        context,
+      }),
+      orderableDocumentListDeskItem({
         type: "author",
         title: "Authors",
         icon: User,

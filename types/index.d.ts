@@ -1,10 +1,19 @@
 import { GLOBAL_CONTENT_QUERYResult } from "@/sanity.types";
 
-export type NavItem = {
+type NavItem = {
   label: string;
   href: string;
   target: boolean;
-  subMenu?: NavItem[];
+  subMenu?: {
+    label: string;
+    href: string;
+    target: boolean;
+    subSubMenu?: {
+      label: string;
+      href: string;
+      target: boolean;
+    }[];
+  }[];
 };
 
 export type BreadcrumbLink = {

@@ -10,6 +10,11 @@ export const GLOBAL_CONTENT_QUERY = groq`
       label,
       href,
       target,
+      subSubMenu[]{
+      label,
+      href,
+      target,
+    } 
     }
   },
   footerLogo,  
