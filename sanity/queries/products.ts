@@ -1,6 +1,6 @@
 import { groq } from "next-sanity";
 
-export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
+export const PRODUCT_QUERY = groq`*[_type == "product" && slug.current == $slug][0]{
     title,
     slug,
     image{
@@ -18,7 +18,8 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
         }
       },
       alt
-    },
+    },    
+    description,
     body[]{
       ...,
       _type == "image" => {
@@ -36,26 +37,7 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
           }
         }
       }
-    },
-    author->{
-      name,
-      image {
-        ...,
-        asset->{
-          _id,
-          url,
-          mimeType,
-          metadata {
-            lqip,
-            dimensions {
-              width,
-              height
-            }
-          }
-        },
-        alt
-      }
-    },
+    },    
     category->{
     _id,
     title
@@ -83,10 +65,18 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
     }
 }`;
 
-export const POSTS_QUERY = groq`*[_type == "post" && defined(slug)] | order(_createdAt desc){
+export const PRODUCTS_QUERY = groq`*[_type == "product" && defined(slug)] | order(_createdAt desc){
     title,
     slug,
-    excerpt,
+    description,
+    category->{
+    _id,
+    title
+  },
+  subcategory->{
+    _id,
+    title
+  },
     image{
       asset->{
         _id,
@@ -104,4 +94,4 @@ export const POSTS_QUERY = groq`*[_type == "post" && defined(slug)] | order(_cre
     },
 }`;
 
-export const POSTS_SLUGS_QUERY = groq`*[_type == "post" && defined(slug)]{slug}`;
+export const PRODUCTS_SLUGS_QUERY = groq`*[_type == "product" && defined(slug)]{slug}`;

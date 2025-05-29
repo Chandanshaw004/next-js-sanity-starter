@@ -52,6 +52,7 @@ export default defineType({
         { type: "faqs" },
         { type: "form-newsletter" },
         { type: "all-posts" },
+        { type: "all-product-posts" },
       ],
       options: {
         insertMenu: {
@@ -110,6 +111,11 @@ export default defineType({
               name: "all-posts",
               title: "All Posts",
               of: ["all-posts"],
+            },
+            {
+              name: "all-product-posts",
+              title: "All product Posts",
+              of: ["all-product-posts"],
             },
           ],
           views: [

@@ -38,6 +38,9 @@ import logoCloud1 from "./schemas/blocks/logo-cloud/logo-cloud-1";
 import faqs from "./schemas/blocks/faqs";
 import newsletter from "./schemas/blocks/forms/newsletter";
 import allPosts from "./schemas/blocks/all-posts";
+import subCategory from "./schemas/documents/sub-category";
+import products from "./schemas/documents/products";
+import allProductPosts from "./schemas/blocks/all-product-posts";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -45,8 +48,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     page,
     global,
     post,
+    products,
     author,
     category,
+    subCategory,
     faq,
     testimonial,
     // shared objects
@@ -79,5 +84,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     faqs,
     newsletter,
     allPosts,
+    allProductPosts,
   ],
 };

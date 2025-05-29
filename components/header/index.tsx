@@ -13,7 +13,8 @@ type HeaderProps = {
 };
 
 export default function Header(props: HeaderProps) {
-  const { logo, navItems } = props;
+  const { logo, navItems } = props;  
+  
 
   return (
     <header className="sticky top-0 w-full border-border/40 bg-background/95 z-50">

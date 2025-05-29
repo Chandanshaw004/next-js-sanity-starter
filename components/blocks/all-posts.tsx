@@ -10,10 +10,7 @@ type AllPostsProps = Extract<
   { _type: "all-posts" }
 >;
 
-export default async function AllPosts({
-  padding,
-  colorVariant,
-}: AllPostsProps) {
+export default async function AllPosts({padding,colorVariant}: AllPostsProps) {
   const color = stegaClean(colorVariant);
   const posts = await fetchSanityPosts();
 

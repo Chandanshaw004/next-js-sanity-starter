@@ -6,6 +6,7 @@ import {
   POSTS_SLUGS_QUERY,
 } from "@/sanity/queries/post";
 import {
+  CATEGORY_QUERYResult,
   GLOBAL_CONTENT_QUERYResult,
   PAGE_QUERYResult,
   PAGES_SLUGS_QUERYResult,
@@ -14,6 +15,7 @@ import {
   POSTS_SLUGS_QUERYResult,
 } from "@/sanity.types";
 import { GLOBAL_CONTENT_QUERY } from "../queries/global";
+import { CATEGORY_QUERY } from "../queries/category";
 
 export const fetchSanityPageBySlug = async ({
   slug,
@@ -43,7 +45,6 @@ export const fetchSanityPosts = async (): Promise<POSTS_QUERYResult> => {
   const { data } = await sanityFetch({
     query: POSTS_QUERY,
   });
-
   return data;
 };
 
@@ -76,6 +77,15 @@ export const fetchSanityGlobalContent =
     const { data } = await sanityFetch({
       query: GLOBAL_CONTENT_QUERY,
     });
+
+    return data;
+  };
+
+export const fetchSanityCategories =
+  async (): Promise<CATEGORY_QUERYResult> => {
+    const { data } = await sanityFetch({
+      query: CATEGORY_QUERY,
+    });    
 
     return data;
   };
