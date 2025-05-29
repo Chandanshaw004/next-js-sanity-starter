@@ -2,8 +2,8 @@ import { defineField, defineType } from "sanity";
 import { FileText } from "lucide-react";
 
 export default defineType({
-  name: "post",
-  title: "Post",
+  name: "product",
+  title: "Product",
   type: "document",
   icon: FileText,
   groups: [
@@ -21,6 +21,22 @@ export default defineType({
     },
   ],
   fields: [
+    defineField({
+      name: "image",
+      title: "Image",
+      type: "image",
+      group: "settings",
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Alternative Text",
+        },
+      ],
+    }),
     defineField({
       name: "title",
       title: "Title",
@@ -40,33 +56,16 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "excerpt",
-      title: "Excerpt",
+      name: "description",
+      title: "Description",
       type: "text",
       group: "content",
-    }),
+    }),   
     defineField({
-      name: "author",
-      title: "Author",
-      type: "reference",
-      group: "settings",
-      to: { type: "author" },
-    }),
-    defineField({
-      name: "image",
-      title: "Image",
-      type: "image",
-      group: "settings",
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        {
-          name: "alt",
-          type: "string",
-          title: "Alternative Text",
-        },
-      ],
+      name: "body",
+      title: "Body",
+      type: "block-content",
+      group: "content",
     }),
     defineField({
       name: "category",
@@ -92,13 +91,6 @@ export default defineType({
           };
         },
       },
-    }),
-
-    defineField({
-      name: "body",
-      title: "Body",
-      type: "block-content",
-      group: "content",
     }),
     defineField({
       name: "meta_title",
@@ -130,12 +122,13 @@ export default defineType({
   preview: {
     select: {
       title: "title",
-      author: "author.name",
       media: "image",
-    },
+      category: "category.title",
+      subcategory: "subcategory.title",
+    },   
     prepare(selection) {
-      const { author } = selection;
-      return { ...selection, subtitle: author && `by ${author}` };
-    },
+      const { category, subcategory } = selection;
+      return { ...selection, subtitle: category && `${category} - ${subcategory}` };
+    }, 
   },
 });

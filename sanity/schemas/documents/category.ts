@@ -15,7 +15,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "subcategory",
+      name: "subcategory", 
       title: "Sub Category",
       type: "array",
       of: [{ type: "reference", to: [{ type: "subcategory" }] }],

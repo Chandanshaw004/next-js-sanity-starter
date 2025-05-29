@@ -13,8 +13,7 @@ type HeaderProps = {
 };
 
 export default function Header(props: HeaderProps) {
-  const { logo, navItems } = props;
-  console.log("Header props:", navItems);
+  const { logo, navItems } = props;  
   
 
   return (

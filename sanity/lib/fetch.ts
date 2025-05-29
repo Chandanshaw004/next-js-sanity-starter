@@ -45,7 +45,6 @@ export const fetchSanityPosts = async (): Promise<POSTS_QUERYResult> => {
   const { data } = await sanityFetch({
     query: POSTS_QUERY,
   });
-
   return data;
 };
 

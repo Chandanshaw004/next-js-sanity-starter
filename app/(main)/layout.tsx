@@ -4,7 +4,8 @@ import { DisableDraftMode } from "@/components/disable-draft-mode";
 import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 import { SanityLive } from "@/sanity/lib/live";
-import { fetchSanityCategories, fetchSanityGlobalContent } from "@/sanity/lib/fetch";
+import { fetchSanityGlobalContent } from "@/sanity/lib/fetch";
+import { fetchSanityProducts } from "@/sanity/lib/product";
 
 export default async function MainLayout({
   children,
@@ -12,8 +13,9 @@ export default async function MainLayout({
   children: React.ReactNode;
 }) {
   const data = await fetchSanityGlobalContent();
-  const categori = await fetchSanityCategories();
-  console.log("fetchSanityCategories", categori);
+  
+  const posts = await fetchSanityProducts();
+    console.log("Fetched products:", posts);
   const header = {
     logo: data?.headerLogo,
     navItems: data?.headerNavItems,
