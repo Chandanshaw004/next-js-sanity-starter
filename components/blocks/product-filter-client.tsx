@@ -16,8 +16,8 @@ export default function ProductFilterClient({ products, categories }: any) {
 
     useEffect(() => {
         const params = new URLSearchParams(searchParams.toString());
-        const urlCategory = params.getAll("category");
-        const urlSubcategory = params.getAll("subcategory");
+        const urlCategory = params.getAll("category").map((c) => c.toLowerCase());
+        const urlSubcategory = params.getAll("subcategory").map((s) => s.toLowerCase());
 
         const init: { [cat: string]: string[] } = {};
 
@@ -27,11 +27,12 @@ export default function ProductFilterClient({ products, categories }: any) {
 
         urlSubcategory.forEach((sub) => {
             products.forEach((p: any) => {
-                if (p.subcategory?.title === sub) {
-                    const parent = p.category?.title;
-                    if (parent) {
-                        if (!init[parent]) init[parent] = [];
-                        if (!init[parent].includes(sub)) init[parent].push(sub);
+                const productCat = p.category?.title?.toLowerCase();
+                const productSub = p.subcategory?.title?.toLowerCase();
+                if (productSub === sub) {
+                    if (productCat) {
+                        if (!init[productCat]) init[productCat] = [];
+                        if (!init[productCat].includes(sub)) init[productCat].push(sub);
                     }
                 }
             });
@@ -40,66 +41,75 @@ export default function ProductFilterClient({ products, categories }: any) {
         setSelectedCategories(init);
     }, []);
 
+
+
     useEffect(() => {
         if (!shouldUpdateUrl) return;
 
         const params = new URLSearchParams();
         Object.entries(selectedCategories).forEach(([parent, subs]) => {
-            params.append("category", parent);
-            subs.forEach((sub) => params.append("subcategory", sub));
+            params.append("category", parent.toLowerCase()); // ensure lowercase
+            subs.forEach((sub) => params.append("subcategory", sub.toLowerCase())); // ensure lowercase
         });
 
         router.push(`?${params.toString()}`, { scroll: false });
         setShouldUpdateUrl(false);
     }, [selectedCategories, shouldUpdateUrl]);
-    
+
+
     useEffect(() => {
         if (category) {
             setSelectedCategories({
-                [category]: subcategory ? [subcategory] : [],
+                [category.toLowerCase()]: subcategory ? [subcategory.toLowerCase()] : [],
             });
         }
     }, [category, subcategory]);
 
     const handleParentToggle = (parentTitle: string) => {
+        const parentKey = parentTitle.toLowerCase();
         setSelectedCategories((prev) => {
             const updated = { ...prev };
-            if (updated[parentTitle]) {
-                delete updated[parentTitle];
+            if (updated[parentKey]) {
+                delete updated[parentKey];
             } else {
-                updated[parentTitle] = [];
+                updated[parentKey] = [];
             }
-            setShouldUpdateUrl(true); // trigger URL update in effect
+            setShouldUpdateUrl(true);
             return updated;
         });
     };
 
-    const handleSubToggle = (parentTitle: string, subTitle: string) => {
-        setSelectedCategories((prev) => {
-            const current = prev[parentTitle] ?? [];
-            const updatedSub = current.includes(subTitle)
-                ? current.filter((s) => s !== subTitle)
-                : [...current, subTitle];
 
-            const updated = { ...prev, [parentTitle]: updatedSub };
-            setShouldUpdateUrl(true); // trigger URL update in effect
+    const handleSubToggle = (parentTitle: string, subTitle: string) => {
+        const parentKey = parentTitle.toLowerCase();
+        const subKey = subTitle.toLowerCase();
+
+        setSelectedCategories((prev) => {
+            const current = prev[parentKey] ?? [];
+            const updatedSub = current.includes(subKey)
+                ? current.filter((s) => s !== subKey)
+                : [...current, subKey];
+
+            const updated = { ...prev, [parentKey]: updatedSub };
+            setShouldUpdateUrl(true);
             return updated;
         });
     };
 
     const filteredProducts = products.filter((product: any) => {
-        const parent = product.category?.title;         // e.g., "ARC" or "TIG"
-        const sub = product.subcategory?.title;         // e.g., "Mosfet"
+        // ✅ Show all if nothing is selected
+        if (Object.keys(selectedCategories).length === 0) return true;
 
-        // Check if this category is selected
+        const parent = product.category?.title?.toLowerCase();
+        const sub = product.subcategory?.title?.toLowerCase();
+
         if (!selectedCategories[parent]) return false;
-
-        // If no subcategory selected under parent, show all in parent category
         if (selectedCategories[parent].length === 0) return true;
 
-        // Only show if both category and subcategory match
         return selectedCategories[parent].includes(sub);
     });
+
+
 
 
     return (
@@ -112,13 +122,13 @@ export default function ProductFilterClient({ products, categories }: any) {
                         <label className="flex items-center gap-2 font-medium text-base">
                             <input
                                 type="checkbox"
-                                checked={selectedCategories[cat.title] !== undefined}
+                                checked={selectedCategories[cat.title.toLowerCase()] !== undefined}
                                 onChange={() => handleParentToggle(cat.title)}
                                 className="accent-primary"
                             />
                             {cat.title}
                         </label>
-                        {selectedCategories[cat.title] !== undefined &&
+                        {selectedCategories[cat.title.toLowerCase()] !== undefined &&
                             cat.subcategory?.map((sub: any) => (
                                 <label
                                     key={sub.title}
@@ -126,7 +136,7 @@ export default function ProductFilterClient({ products, categories }: any) {
                                 >
                                     <input
                                         type="checkbox"
-                                        checked={selectedCategories[cat.title]?.includes(sub.title)}
+                                        checked={selectedCategories[cat.title.toLowerCase()]?.includes(sub.title.toLowerCase())}
                                         onChange={() => handleSubToggle(cat.title, sub.title)}
                                         className="accent-primary"
                                     />
