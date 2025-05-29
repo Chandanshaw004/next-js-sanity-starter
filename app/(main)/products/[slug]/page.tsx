@@ -3,9 +3,11 @@ import Breadcrumbs from "@/components/ui/breadcrumbs";
 import { BreadcrumbLink } from "@/types";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
-import { fetchSanityProductsBySlug, fetchSanityProductsStaticParams } from "@/sanity/lib/product";
+import {
+  fetchSanityProductsBySlug,
+  fetchSanityProductsStaticParams,
+} from "@/sanity/lib/product";
 import ProductCards from "@/components/blocks/product-card";
-
 
 export async function generateStaticParams() {
   const posts = await fetchSanityProductsStaticParams();

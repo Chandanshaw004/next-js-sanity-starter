@@ -13,9 +13,7 @@ export default async function MainLayout({
   children: React.ReactNode;
 }) {
   const data = await fetchSanityGlobalContent();
-  
-  const posts = await fetchSanityProducts();
-    console.log("Fetched products:", posts);
+
   const header = {
     logo: data?.headerLogo,
     navItems: data?.headerNavItems,
